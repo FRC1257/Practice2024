@@ -123,11 +123,18 @@ public class ShooterIOSparkMax implements ShooterIO  {
         lFeed = new SimpleMotorFeedforward(kS, kV, kA);
     }
 
+    /**
+     * Sets the PID Controller for the Right Flywheel
+     * @param Kp proportionality constant 
+     * @param Ki integral constant 
+     * @param Kd differential constant
+     */
+
     @Override
-    public void setRightPID(double p, double i, double d) {
-        rController.setP(p);
-        rController.setI(i);
-        rController.setD(d);
+    public void setRightPID(double Kp, double Ki, double Kd) {
+        rController.setP(Kp);
+        rController.setI(Ki);
+        rController.setD(Kd);
     }
 
     @Override
