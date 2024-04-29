@@ -11,17 +11,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.SpinAuto;
+import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.drive.DriveIO;
-import frc.robot.subsystems.drive.DriveIOCIM;
-import frc.robot.subsystems.drive.DriveIOSim;
-import frc.robot.subsystems.drive.DriveIOTalon;
+import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOReal;
+import frc.robot.subsystems.drive.ModuleIO;
+import frc.robot.subsystems.drive.ModuleIOSim;
+import frc.robot.subsystems.drive.ModuleIOSparkMax;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOPhoton;
 import frc.robot.subsystems.vision.VisionIOSim;
 import frc.robot.util.CommandSnailController;
+import static frc.robot.util.drive.DriveControls.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -33,7 +34,6 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -70,20 +70,53 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       // Real robot, instantiate hardware IO implementations
       case REAL:
-        drive = new Drive(new DriveIOTalon(), new VisionIOPhoton(), new Pose2d());
+        drive = new Drive(
+          new GyroIOReal(),
+            new ModuleIOSparkMax(0), // Front Left
+            new ModuleIOSparkMax(1), // Front Right
+            new ModuleIOSparkMax(2), // Back left
+            new ModuleIOSparkMax(3), // Back right
+            new VisionIOPhoton()
+        );
         break;
 
       // Sim robot, instantiate physics sim IO implementations
       case SIM:
-        drive = new Drive(new DriveIOSim(), new VisionIOSim(), new Pose2d());
+        drive = new Drive(
+            new GyroIO() {
+            },
+            new ModuleIOSim(),
+            new ModuleIOSim(),
+            new ModuleIOSim(),
+            new ModuleIOSim(),
+            new VisionIOSim());
         break;
       case TEST:
-        drive = new Drive(new DriveIOCIM(), new VisionIOPhoton(), new Pose2d());
+      drive = new Drive(
+          new GyroIO() {
+          },
+          new ModuleIOSim(),
+          new ModuleIOSim(),
+          new ModuleIOSim(),
+          new ModuleIOSim(),
+          new VisionIOSim());
         break;
 
       // Replayed robot, disable IO implementations
       default:
-        drive = new Drive(new DriveIO() {}, new VisionIO() {}, new Pose2d());
+        drive = new Drive(
+            new GyroIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new VisionIO() {
+            });
         break;
     }
 
@@ -97,7 +130,6 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("Spin", new SpinAuto(drive));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -112,15 +144,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Clear old buttons
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
-    drive.setDefaultCommand(
-        new RunCommand(() -> drive.driveArcade(driver.getDriveForward(), driver.getDriveTurn()), drive));
+    drive.setDefaultCommand( // change state here
+        DriveCommands.joystickDrive(
+            drive,
+            DRIVE_FORWARD,
+            DRIVE_STRAFE,
+            DRIVE_ROTATE));
 
-    driver.rightBumper().onTrue(
-      new StartEndCommand(() -> drive.startSlowMode(), () -> drive.stopSlowMode(), drive)
-    );
-
-    // cancel trajectory
-    driver.getY().onTrue(drive.endTrajectoryCommand());
+        DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
   }
 
   /**
