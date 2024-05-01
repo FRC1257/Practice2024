@@ -21,23 +21,9 @@ public interface ShooterIO {
     
     default void updateInputs(ShooterIOInputs inputs) {}
 
-    default void setLeftRPM(double rpm) {}
-    
-    default void setRightRPM(double rpm) {}
+    default void setRPM(double rpm) {}
 
-    default void setRPM(double rpm) {
-        setLeftRPM(rpm);
-        setRightRPM(rpm);
-    }
-
-    default void setLeftVoltage(double voltage) {}
-
-    default void setRightVoltage(double voltage) {}
-
-    default void setVoltage(double voltage){
-        setLeftVoltage(voltage);
-        setRightVoltage(voltage);
-    }
+    default void setVoltage(double voltage){}
 
     default void setLeftBreak(boolean Isenabled) {}
     
@@ -48,13 +34,9 @@ public interface ShooterIO {
         setRightBreak(Isenabled);
     }
 
-    default void setLeftPID(double p, double i, double d) {}
+    default void setPID(double p, double i, double d) {}
 
-    default void setLeftFF(double s, double v, double a) {}
-  
-    default void setRightPID(double p, double i, double d) {}
-  
-    default void setRightFF(double s, double v, double a) {}
+    default void setFF(double s, double v, double a) {}
 
     default void stop() {}
 

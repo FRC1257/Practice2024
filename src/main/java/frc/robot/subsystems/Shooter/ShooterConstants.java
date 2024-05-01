@@ -9,8 +9,9 @@ public class ShooterConstants {
     public static final double SHOOTER_RPM_TOLERANCE = 1257;
     public static final double SHOOTER_TOLERANCE = 1257;
 
-    public static final SHOOTER_GAINS RealControllerLeft = new SHOOTER_GAINS(0, 0, 0, 0, 0, 0, 0); 
-    public static final SHOOTER_GAINS RealControllerRight = new SHOOTER_GAINS(0, 0, 0, 0, 0, 0, 0); 
+    public static final double wheelRadiusM = 1257;
+
+    public static final SHOOTER_GAINS RealController = new SHOOTER_GAINS(0, 0, 0, 0, 0, 0, 0); 
     public static final SHOOTER_GAINS SimulationController = new SHOOTER_GAINS(0, 0, 0, 0, 0, 0, 0);
 
     public static record SHOOTER_GAINS (double Kp, double Ki, double Kd, double Ks, double Kv, double Kg, double Ka){}

@@ -72,18 +72,15 @@ public class ShooterIOSparkMax implements ShooterIO  {
     }
 
     @Override
-    public void setLeftRPM(double rpm) {
+    public void setRPM(double rpm) {
         lController.setReference(
             rpm,
             CANSparkBase.ControlType.kVelocity,
             0,
-            lFeed.calculate(rpm),
+            rFeed.calculate(rpm),
             SparkPIDController.ArbFFUnits.kVoltage);
-    }
 
-    @Override
-    public void setRightRPM(double rpm) {
-        lController.setReference(
+        rController.setReference(
             rpm,
             CANSparkBase.ControlType.kVelocity,
             0,
@@ -92,14 +89,11 @@ public class ShooterIOSparkMax implements ShooterIO  {
     }
 
     @Override
-    public void setLeftVoltage(double volts){
+    public void setVoltage(double volts){
         lMotor.setVoltage(volts);
-    }
-
-    @Override
-    public void setRightVoltage(double volts){
         rMotor.setVoltage(volts);
     }
+
 
     @Override
     public void setLeftBreak(boolean Isenabled) {
@@ -112,27 +106,19 @@ public class ShooterIOSparkMax implements ShooterIO  {
     }
 
     @Override
-    public void setLeftPID(double Kp, double Ki, double Kd) {
+    public void setPID(double Kp, double Ki, double Kd) {
+        rController.setP(Kp);
+        rController.setI(Ki);
+        rController.setD(Kd);
         lController.setP(Kp);
         lController.setI(Ki);
         lController.setD(Kd);
     }
 
     @Override
-    public void setLeftFF(double kS, double kV, double kA) {
-        lFeed = new SimpleMotorFeedforward(kS, kV, kA);
-    }
-
-    @Override
-    public void setRightPID(double Kp, double Ki, double Kd) {
-        rController.setP(Kp);
-        rController.setI(Ki);
-        rController.setD(Kd);
-    }
-
-    @Override
-    public void setRightFF(double Ks, double Kv, double Ka) {
+    public void setFF(double Ks, double Kv, double Ka) {
         rFeed = new SimpleMotorFeedforward(Ks, Kv, Ka);
+        lFeed = new SimpleMotorFeedforward(Ks, Kv, Ka);
     }
 
     @Override
