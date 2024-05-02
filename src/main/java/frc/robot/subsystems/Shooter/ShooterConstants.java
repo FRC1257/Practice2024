@@ -1,4 +1,5 @@
 package frc.robot.subsystems.Shooter;
+import frc.robot.Constants.LoggedTunableGains;
 
 public class ShooterConstants {
     public static final int SHOOTER_LEFT_ID = 0; 
@@ -11,8 +12,6 @@ public class ShooterConstants {
 
     public static final double wheelRadiusM = 1257;
 
-    public static final SHOOTER_GAINS RealController = new SHOOTER_GAINS(0, 0, 0, 0, 0, 0, 0); 
-    public static final SHOOTER_GAINS SimulationController = new SHOOTER_GAINS(0, 0, 0, 0, 0, 0, 0);
-
-    public static record SHOOTER_GAINS (double Kp, double Ki, double Kd, double Ks, double Kv, double Kg, double Ka){}
+    public static final LoggedTunableGains RealController = new LoggedTunableGains(0, 0, 0, 0, 0, 0); 
+    public static final LoggedTunableGains SimulationController = new LoggedTunableGains(0, 0, 0, 0, 0,0);
 }

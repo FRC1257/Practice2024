@@ -32,6 +32,8 @@ public final class Constants {
 
   public static final boolean useVision = true;
 
+  public static final record LoggedTunableGains(double Kp, double Ki, double Kd, double Ks, double Kv, double Ka) {}
+
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -167,7 +169,7 @@ public final class Constants {
 
   public static double PI = 3.141592653589793238462643;
   public static double UPDATE_PERIOD = 0.010; // seconds
-public static boolean tuningMode;
+  public static boolean tuningMode;
   public final static int NEO_550_CURRENT_LIMIT = 25; // amps
   public final static int QUADRATURE_COUNTS_PER_REV = 8192; // encoder resolution
   // https://www.revrobotics.com/rev-11-1271/
