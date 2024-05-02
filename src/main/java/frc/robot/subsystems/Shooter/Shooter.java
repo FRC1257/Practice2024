@@ -96,10 +96,18 @@ public class Shooter extends SubsystemBase {
         shooterIO.setVoltage(volts);
     }
 
+    /**
+     * @return left flywheel velocity expressed in revolutions per minute 
+     */
+
     public double getLeftCharacterizationVelocity() {
         return shooterInputs.lShooterVelocityRPM;
     }
-    
+
+    /**
+     * @return right flywheel velocity expressed in revolutions per minute 
+     */
+
     public double getRightCharacterizationVelocity() {
         return shooterInputs.rShooterVelocityRPM;
     }
@@ -107,6 +115,7 @@ public class Shooter extends SubsystemBase {
     /**
      * @return {@code true} if the shooter reaches it's setpoint: {@code false} otherwise.
      */
+
     @AutoLogOutput(key = "Shooter/AtSetpoint")
     public boolean atSetpoint() {
         return Math.abs(shooterInputs.lShooterVelocityRPM - leftSetpointRPM)
@@ -148,22 +157,17 @@ public class Shooter extends SubsystemBase {
         setVoltage(() -> volts);
     }
     
-     
     public void setRPM(double RPM) {
-        leftSetpointRPM = RPM; //RPM setpoint is being set here
+        leftSetpointRPM = RPM; 
         rightSetpointRPM = RPM;
         shooterIO.setRPM(RPM);
     }
-    
-      public void setRPM(double rpm) {
-        setRPM(rpm);
-      }
-    
-      public void setRPM(DoubleSupplier RPM) {
+
+    public void setRPM(DoubleSupplier RPM) {
         leftSetpointRPM = RPM.getAsDouble();
         rightSetpointRPM = RPM.getAsDouble();
         shooterIO.setRPM(RPM.getAsDouble());
-      }
+    }
     
       public Command stop() {
         return runVoltage(() -> 0);
