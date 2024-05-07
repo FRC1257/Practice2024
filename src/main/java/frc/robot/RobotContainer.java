@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOReal;
@@ -51,6 +53,7 @@ import java.io.File;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  private final Shooter shooter;
 
   private Mechanism2d mech = new Mechanism2d(3, 3);
 
@@ -77,6 +80,9 @@ public class RobotContainer {
             new ModuleIOSparkMax(2), // Back left
             new ModuleIOSparkMax(3), // Back right
             new VisionIOPhoton()
+        );
+        shooter = new Shooter(
+          new ShooterIO()
         );
         break;
 

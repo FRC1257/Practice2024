@@ -72,28 +72,27 @@ public class ShooterIOSparkMax implements ShooterIO  {
     }
 
     @Override
-    public void setRPM(double rpm) {
+    public void setRPM(double RightRPM, double LeftRPM) {
         lController.setReference(
-            rpm,
+            LeftRPM,
             CANSparkBase.ControlType.kVelocity,
             0,
-            rFeed.calculate(rpm),
+            lFeed.calculate(LeftRPM),
             SparkPIDController.ArbFFUnits.kVoltage);
 
         rController.setReference(
-            rpm,
+            RightRPM,
             CANSparkBase.ControlType.kVelocity,
             0,
-            rFeed.calculate(rpm),
+            rFeed.calculate(RightRPM),
             SparkPIDController.ArbFFUnits.kVoltage);
     }
 
     @Override
-    public void setVoltage(double volts){
-        lMotor.setVoltage(volts);
-        rMotor.setVoltage(volts);
+    public void setVoltage(double RightVolts, double LeftVolts){
+        lMotor.setVoltage(LeftVolts);
+        rMotor.setVoltage(RightVolts);
     }
-
 
     @Override
     public void setLeftBreak(boolean Isenabled) {

@@ -9,6 +9,7 @@ public class ShooterConstants {
     public static final double FLYWHEEL_REDUCTION = 1;
     public static final double SHOOTER_RPM_TOLERANCE = 1257;
     public static final double SHOOTER_TOLERANCE = 1257;
+    public static final double MOMENT_OF_INERTIA = 1257;
 
     public static final double wheelRadiusM = 1257;
 

@@ -3,7 +3,6 @@ package frc.robot.subsystems.Shooter;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import frc.robot.util.Exceptions.VoltageToleranceException;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -124,59 +123,59 @@ public class Shooter extends SubsystemBase {
                 <= shooterTolerance.get();
     }
 
-    public Command runVoltage(DoubleSupplier volts) {
-        return new FunctionalCommand(
-        () -> setVoltage(volts), 
-        () -> {setVoltage(volts);},
+    public Command runVoltage(DoubleSupplier RightVoltage, DoubleSupplier LeftVoltage) {
+      return new FunctionalCommand(
+        () -> setVoltage(RightVoltage,LeftVoltage), 
+        () -> {setVoltage(RightVoltage,LeftVoltage);},
         (interrupted) -> {
-            if (interrupted) {
-            shooterIO.stop();
-            }
+          if (interrupted) {
+          shooterIO.stop();
+          }
         },
         () -> false,
         this
         );
     }
     public Command runVoltage(double volts) {
-        return runVoltage(() -> volts);
-      }
+        return runVoltage(() -> volts, () -> volts);
+    }
     
-    public void setVoltage(DoubleSupplier Voltage) {
+    public void setVoltage(DoubleSupplier RightVoltage, DoubleSupplier LeftVoltage) {
 
-        leftMotorVoltage = Voltage.getAsDouble()*10;
-        rightMotorVoltage = Voltage.getAsDouble()*10;
+      leftMotorVoltage = LeftVoltage.getAsDouble()*10;
+      rightMotorVoltage = RightVoltage.getAsDouble()*10;
 
-        shooterIO.setVoltage(Voltage.getAsDouble()*10);
+      shooterIO.setVoltage(leftMotorVoltage,rightMotorVoltage);
 
-        isVoltageRightClose(Voltage.getAsDouble());
-        isVoltageLeftClose(Voltage.getAsDouble());
+      isVoltageRightClose(RightVoltage.getAsDouble());
+      isVoltageLeftClose(LeftVoltage.getAsDouble());
 
     }
     
-    public void setVoltage(double volts){
-        setVoltage(() -> volts);
+    public void setVoltage(double RightVoltage, double LeftVoltage){
+      setVoltage(() -> RightVoltage, () -> LeftVoltage);
     }
     
-    public void setRPM(double RPM) {
-        leftSetpointRPM = RPM; 
-        rightSetpointRPM = RPM;
-        shooterIO.setRPM(RPM);
+    public void setRPM(double RightRPM, double LeftRPM) {
+        leftSetpointRPM = LeftRPM; 
+        rightSetpointRPM = RightRPM;
+        shooterIO.setRPM(LeftRPM, RightRPM);
     }
 
-    public void setRPM(DoubleSupplier RPM) {
-        leftSetpointRPM = RPM.getAsDouble();
-        rightSetpointRPM = RPM.getAsDouble();
-        shooterIO.setRPM(RPM.getAsDouble());
+    public void setRPM(DoubleSupplier RightRPM, DoubleSupplier LeftRPM) {
+      setRPM(RightRPM.getAsDouble(),LeftRPM.getAsDouble());
     }
     
       public Command stop() {
-        return runVoltage(() -> 0);
+        return runVoltage(0);
       }
-    
+      
+      @AutoLogOutput(key = "Shooter/LeftSpeedMetersPerSecond")
       public double getLeftSpeedMetersPerSecond() {
         return shooterInputs.lShooterVelocityRPM * ShooterConstants.wheelRadiusM * 2 * Math.PI / 60;
       }
-    
+      
+      @AutoLogOutput(key = "Shooter/RightSpeedMetersPerSecond")
       public double getRightSpeedMetersPerSecond() {
         return shooterInputs.rShooterVelocityRPM * ShooterConstants.wheelRadiusM * 2 * Math.PI / 60;
       }

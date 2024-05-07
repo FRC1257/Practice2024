@@ -21,9 +21,17 @@ public interface ShooterIO {
     
     default void updateInputs(ShooterIOInputs inputs) {}
 
-    default void setRPM(double rpm) {}
+    default void setRPM(double LeftRPM, double RightRPM) {}
 
-    default void setVoltage(double voltage){}
+    default void setRPM(double RPM){
+        setRPM(RPM,RPM);
+    }
+
+    default void setVoltage(double RightVoltage, double LeftVoltage){}
+
+    default void setVoltage(double Voltage) {
+        setVoltage(Voltage, Voltage);
+    }
 
     default void setLeftBreak(boolean Isenabled) {}
     
