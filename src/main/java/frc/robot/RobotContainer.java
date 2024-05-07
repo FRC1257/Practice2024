@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
+import frc.robot.subsystems.Shooter.ShooterIOSim;
+import frc.robot.subsystems.Shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOReal;
@@ -82,7 +84,7 @@ public class RobotContainer {
             new VisionIOPhoton()
         );
         shooter = new Shooter(
-          new ShooterIO()
+          new ShooterIOSparkMax()
         );
         break;
 
@@ -96,6 +98,9 @@ public class RobotContainer {
             new ModuleIOSim(),
             new ModuleIOSim(),
             new VisionIOSim());
+        shooter = new Shooter(
+          new ShooterIOSim()
+        );
         break;
       case TEST:
       drive = new Drive(
@@ -106,6 +111,8 @@ public class RobotContainer {
           new ModuleIOSim(),
           new ModuleIOSim(),
           new VisionIOSim());
+      shooter = new Shooter(
+        new ShooterIOSim());
         break;
 
       // Replayed robot, disable IO implementations
@@ -123,6 +130,9 @@ public class RobotContainer {
             },
             new VisionIO() {
             });
+        shooter = new Shooter(
+          new ShooterIO() {}
+        );
         break;
     }
 
