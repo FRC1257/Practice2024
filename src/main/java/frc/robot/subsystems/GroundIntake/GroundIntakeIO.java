@@ -1,20 +1,25 @@
+package frc.robot.commands.subsystems.GroundIntake;
+
 public interface GroundIntakeIO {
     @Autolog
-    public class static GroundIntakeIOInputs {
-        
+    public static class GroundIntakeIOInputs {
+        public double velocityRad;
     }
-    //Updates the values found in the GroundIntakeIOInputs class (used for logging)
+    /** Updates the values found in the GroundIntakeIOInputs class (used for logging) */
     public default void updateInputs(GroundIntakeIOInputs inputs) {}
 
-    //set the angular velocity of the flywheels
-    public default void setVelocityRad(float radians) {}
+    /** sets the raw voltage of the motor (NO velocity PID) */
+    public default void setVoltage(double voltage) {}
 
-    //gets the angular velocity of the flywheels
-    public default float getVelocityRad() {return 0;}
+    /** sets the speed of the motor using velocity PID */
+    public default void setSpeedRad(double speed) {}
 
-    //if true, this function will force the flywheel to break
+    /** gets the angular velocity of the flywheels */
+    public default double getSpeedRad() {return 0;}
+
+    /** if true, this function will force the flywheel to break */
     public default void setBrake(boolean brake) {}
 
-    //sets the PID of the flywheel
+    /** sets the PID of the flywheel */
     public default void setPID( pid) {}
 }
