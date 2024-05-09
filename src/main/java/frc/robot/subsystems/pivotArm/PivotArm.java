@@ -1,10 +1,8 @@
 package frc.robot.subsystems.pivotArm;
 
-import java.util.Arrays;
 import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
@@ -14,7 +12,6 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
 import frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
 import frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
 import frc.robot.util.LoggedTunableNumber;

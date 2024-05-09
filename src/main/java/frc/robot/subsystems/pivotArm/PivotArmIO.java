@@ -2,8 +2,8 @@ package frc.robot.subsystems.pivotArm;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import static frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
-import static frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
 
 public interface PivotArmIO {
     @AutoLog

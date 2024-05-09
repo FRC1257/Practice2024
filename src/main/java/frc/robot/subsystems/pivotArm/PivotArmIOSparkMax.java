@@ -17,8 +17,8 @@ import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_LEFT1_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_LEFT2_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_RIGHT1_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_RIGHT2_ID;
-import static frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
-import static frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
 
 import org.littletonrobotics.junction.Logger;
 

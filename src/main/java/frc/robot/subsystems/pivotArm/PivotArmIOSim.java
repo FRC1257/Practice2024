@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.subsystems.pivotArm.PivotArmConstants.PivotArmSimConstants;
 
 import static frc.robot.subsystems.pivotArm.PivotArmConstants.PivotArmSimConstants;
-import static frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
-import static frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
 
 import org.littletonrobotics.junction.Logger;
 
