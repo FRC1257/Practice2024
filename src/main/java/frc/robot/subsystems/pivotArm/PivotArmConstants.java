@@ -16,13 +16,16 @@ public class PivotArmConstants {
     public static final double ANGLE_OFFSET = 0;
 
     // PID constants
-    public static final double[] PIVOT_ARM_PID = {0, 0, 0};
-    public static final double[] PIVOT_ARM_FF = {0, 0, 0, 0};
+    public static record PIDConstants(double kP, double kI, double kD) {}
+    public static record FFConstants(double kS, double kG, double kV, double kA) {}
+
+    public static final PIDConstants PID = new PIDConstants(0, 0, 0);
+    public static final FFConstants FF = new FFConstants(0, 0, 0, 0);
     public static final double PID_TOLERANCE = Units.degreesToRadians(1);
 
     public static class PivotArmSimConstants {
         // PID constants
-        public static final double[] PIVOT_ARM_PID_SIM = {0, 0, 0};
-        public static final double[] PIVOT_ARM_FF_SIM = {0, 0, 0, 0};
+        public static final PIDConstants PID_SIM = new PIDConstants(0, 0, 0);
+        public static final FFConstants FF_SIM = new FFConstants(0, 0, 0, 0);
     }
 }

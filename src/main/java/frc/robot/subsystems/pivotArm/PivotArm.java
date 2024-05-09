@@ -15,13 +15,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
+import frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import frc.robot.util.LoggedTunableNumber;
 
 public class PivotArm extends SubsystemBase {
     private PivotArmIO io;
     private PivotArmIOInputsAutoLogged inputs;
 
-    private LoggedDashboardNumber logP, logI, logD;
-    private LoggedDashboardNumber logS, logG, logV, logA;
+    private LoggedTunableNumber logP, logI, logD;
+    private LoggedTunableNumber logS, logG, logV, logA;
 
     private MechanismLigament2d armMechanism;
 
@@ -30,17 +33,17 @@ public class PivotArm extends SubsystemBase {
 
         SmartDashboard.putData(getName(), this);
 
-        double[] pidConstants = io.getPID();
-        double[] ffConstants = io.getFF();
+        PIDConstants pidConstants = io.getPID();
+        FFConstants ffConstants = io.getFF();
 
-        logP = new LoggedDashboardNumber("PivotArm/kP", pidConstants[0]);
-        logI = new LoggedDashboardNumber("PivotArm/kI", pidConstants[1]);
-        logD = new LoggedDashboardNumber("PivotArm/kD", pidConstants[2]);
+        logP = new LoggedTunableNumber("PivotArm/kP", pidConstants.kP());
+        logI = new LoggedTunableNumber("PivotArm/kI", pidConstants.kI());
+        logD = new LoggedTunableNumber("PivotArm/kD", pidConstants.kD());
 
-        logS = new LoggedDashboardNumber("PivotArm/kS", ffConstants[0]);
-        logG = new LoggedDashboardNumber("PivotArm/kG", ffConstants[1]);
-        logV = new LoggedDashboardNumber("PivotArm/kV", ffConstants[2]);
-        logA = new LoggedDashboardNumber("PivotArm/kA", ffConstants[3]);
+        logS = new LoggedTunableNumber("PivotArm/kS", ffConstants.kS());
+        logG = new LoggedTunableNumber("PivotArm/kG", ffConstants.kG());
+        logV = new LoggedTunableNumber("PivotArm/kV", ffConstants.kV());
+        logA = new LoggedTunableNumber("PivotArm/kA", ffConstants.kA());
 
         armMechanism = getMechanism();
     }
@@ -48,18 +51,18 @@ public class PivotArm extends SubsystemBase {
     @Override
     public void periodic() {
         io.updateInputs(inputs);
-        double[] currentPIDConstants = io.getPID();
-        double[] logPIDConstants = {logP.get(), logI.get(), logD.get()};
-        double[] currentFFConstants = io.getFF();
-        double[] logFFConstants = {logS.get(), logG.get(), logV.get(), logA.get()};
-
-        if(!Arrays.equals(currentPIDConstants, logPIDConstants)) {
-            io.setPID(logPIDConstants[0], logPIDConstants[1], logPIDConstants[2]);
-        }
-
-        if(!Arrays.equals(currentFFConstants, logFFConstants)) {
-            io.setFF(logFFConstants[0], logFFConstants[1], logFFConstants[2], logFFConstants[3]);
-        }
+        
+        // This updates the PID and FF constants on the IO if they are
+        LoggedTunableNumber.ifChanged(
+            hashCode(),
+            () -> io.setPID(logP.get(), logI.get(), logD.get()),
+            logP, logI, logD
+        );
+        LoggedTunableNumber.ifChanged(
+            hashCode(),
+            () -> io.setFF(logS.get(), logG.get(), logV.get(), logA.get()),
+            logS, logG, logV, logA
+        );
 
         armMechanism.setAngle(Units.radiansToDegrees(inputs.angleRad));
 

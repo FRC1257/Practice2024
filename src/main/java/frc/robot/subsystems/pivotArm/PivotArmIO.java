@@ -2,6 +2,9 @@ package frc.robot.subsystems.pivotArm;
 
 import org.littletonrobotics.junction.AutoLog;
 
+import static frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import static frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
+
 public interface PivotArmIO {
     @AutoLog
     public static class PivotArmIOInputs {
@@ -38,8 +41,8 @@ public interface PivotArmIO {
     public default void setFF(double s, double g, double v, double a) {}
 
     /** Returns an array containing the current PID constants */
-    public default double[] getPID() { return new double[] {0, 0, 0}; }
+    public default PIDConstants getPID() { return new PIDConstants(0, 0, 0); }
     
     /** Returns an array containing the current FeedForward constants */
-    public default double[] getFF() { return new double[] {0, 0, 0, 0}; }
+    public default FFConstants getFF() { return new FFConstants(0, 0, 0, 0); }
 }

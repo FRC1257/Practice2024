@@ -17,6 +17,8 @@ import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_LEFT1_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_LEFT2_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_RIGHT1_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_RIGHT2_ID;
+import static frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import static frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -60,11 +62,11 @@ public class PivotArmIOSparkMax implements PivotArmIO {
         encoder.setVelocityConversionFactor(2 * Constants.PI * PivotArmConstants.GEAR_REDUCTION / 60);
 
         // Set up PID
-        pidController = new ProfiledPIDController(PivotArmConstants.PIVOT_ARM_PID[0], PivotArmConstants.PIVOT_ARM_PID[1], PivotArmConstants.PIVOT_ARM_PID[2], 
+        pidController = new ProfiledPIDController(PivotArmConstants.PID.kP(), PivotArmConstants.PID.kI(), PivotArmConstants.PID.kD(), 
             new TrapezoidProfile.Constraints(2.45, 2.45));
         pidController.setTolerance(PivotArmConstants.PID_TOLERANCE);
 
-        feedForward = new ArmFeedforward(PivotArmConstants.PIVOT_ARM_FF[0], PivotArmConstants.PIVOT_ARM_FF[1], PivotArmConstants.PIVOT_ARM_FF[2], PivotArmConstants.PIVOT_ARM_FF[3]);
+        feedForward = new ArmFeedforward(PivotArmConstants.FF.kS(), PivotArmConstants.FF.kG(), PivotArmConstants.FF.kV(), PivotArmConstants.FF.kA());
     }
 
     @Override
@@ -127,12 +129,12 @@ public class PivotArmIOSparkMax implements PivotArmIO {
     }
 
     @Override
-    public double[] getPID() {
-        return new double[] {pidController.getP(), pidController.getI(), pidController.getD()};
+    public PIDConstants getPID() {
+        return new PIDConstants(pidController.getP(), pidController.getI(), pidController.getD());
     }
 
     @Override
-    public double[] getFF() {
-        return new double[] {feedForward.ks, feedForward.kg, feedForward.kv, feedForward.ka};
+    public FFConstants getFF() {
+        return new FFConstants(feedForward.ks, feedForward.kg, feedForward.kv, feedForward.ka);
     }
 }
