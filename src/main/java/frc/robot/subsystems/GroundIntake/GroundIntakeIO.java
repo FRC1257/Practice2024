@@ -1,5 +1,7 @@
 package frc.robot.commands.subsystems.GroundIntake;
 
+import static frc.robot.Constants.PID;
+
 public interface GroundIntakeIO {
     @Autolog
     public static class GroundIntakeIOInputs {
@@ -21,5 +23,5 @@ public interface GroundIntakeIO {
     public default void setBrake(boolean brake) {}
 
     /** sets the PID of the flywheel */
-    public default void setPID( pid) {}
+    public default void setPID(PID pid) {}
 }

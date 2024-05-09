@@ -1,6 +1,7 @@
 package frc.robot.commands.subsystems.GroundIntake;
 
 import static frc.robot.Constants.ElectricalLayout;
+import frc.robot.Constants.PID;
 
 public class GroundIntakeIOSparkMax extends GroundIntakeIO{
     CANSparkMax topMotor;
@@ -16,6 +17,6 @@ public class GroundIntakeIOSparkMax extends GroundIntakeIO{
     
     @Override
     public void setVelocityRad(double velocity) {
-        
+
     }
 }
