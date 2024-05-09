@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.subsystems.pivotArm.PivotArmConstants.PivotArmSimConstants;
 
 import static frc.robot.subsystems.pivotArm.PivotArmConstants.PivotArmSimConstants;
+import static frc.robot.subsystems.pivotArm.PivotArmConstants.PIDConstants;
+import static frc.robot.subsystems.pivotArm.PivotArmConstants.FFConstants;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -26,10 +28,10 @@ public class PivotArmIOSim implements PivotArmIO {
     public PivotArmIOSim() {
         armGearbox = DCMotor.getNEO(4);
 
-        pidController = new ProfiledPIDController(PivotArmSimConstants.PIVOT_ARM_PID_SIM[0], PivotArmSimConstants.PIVOT_ARM_PID_SIM[1], PivotArmSimConstants.PIVOT_ARM_PID_SIM[2],
+        pidController = new ProfiledPIDController(PivotArmSimConstants.PID_SIM.kP(), PivotArmSimConstants.PID_SIM.kI(), PivotArmSimConstants.PID_SIM.kD(),
             new TrapezoidProfile.Constraints(2.45, 2.45));
         pidController.setTolerance(PivotArmConstants.PID_TOLERANCE);
-        feedForward = new ArmFeedforward(PivotArmSimConstants.PIVOT_ARM_FF_SIM[0], PivotArmSimConstants.PIVOT_ARM_FF_SIM[1], PivotArmSimConstants.PIVOT_ARM_FF_SIM[2], PivotArmSimConstants.PIVOT_ARM_FF_SIM[3]);
+        feedForward = new ArmFeedforward(PivotArmSimConstants.FF_SIM.kS(), PivotArmSimConstants.FF_SIM.kG(), PivotArmSimConstants.FF_SIM.kV(), PivotArmSimConstants.FF_SIM.kA());
 
         sim = new SingleJointedArmSim(
             armGearbox,
@@ -93,13 +95,13 @@ public class PivotArmIOSim implements PivotArmIO {
     }
 
     @Override
-    public double[] getPID() {
-        return new double[] {pidController.getP(), pidController.getI(), pidController.getD()};
+    public PIDConstants getPID() {
+        return new PIDConstants(pidController.getP(), pidController.getI(), pidController.getD());
     }
 
     @Override
-    public double[] getFF() {
-        return new double[] {feedForward.ks, feedForward.kg, feedForward.kv, feedForward.ka};
+    public FFConstants getFF() {
+        return new FFConstants(feedForward.ks, feedForward.kg, feedForward.kv, feedForward.ka);
     }
 
 }
