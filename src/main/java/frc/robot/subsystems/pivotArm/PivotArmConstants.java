@@ -16,8 +16,8 @@ public class PivotArmConstants {
     public static final double ANGLE_OFFSET = 0;
 
     // PID constants
-    public static record PIDConstants(double kP, double kI, double kD) {}
-    public static record FFConstants(double kS, double kG, double kV, double kA) {}
+    public record PIDConstants(double kP, double kI, double kD) {}
+    public record FFConstants(double kS, double kG, double kV, double kA) {}
 
     public static final PIDConstants PID = new PIDConstants(0, 0, 0);
     public static final FFConstants FF = new FFConstants(0, 0, 0, 0);
