@@ -22,6 +22,10 @@ import frc.robot.subsystems.drive.GyroIOReal;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
+import frc.robot.subsystems.pivotArm.PivotArm;
+import frc.robot.subsystems.pivotArm.PivotArmIO;
+import frc.robot.subsystems.pivotArm.PivotArmIOSim;
+import frc.robot.subsystems.pivotArm.PivotArmIOSparkMax;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOPhoton;
 import frc.robot.subsystems.vision.VisionIOSim;
@@ -56,6 +60,7 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Shooter shooter;
+  private final PivotArm pivotArm;
 
   private Mechanism2d mech = new Mechanism2d(3, 3);
 
@@ -86,6 +91,9 @@ public class RobotContainer {
         shooter = new Shooter(
           new ShooterIOSparkMax()
         );
+        pivotArm = new PivotArm(
+          new PivotArmIOSparkMax()
+        );
         break;
 
       // Sim robot, instantiate physics sim IO implementations
@@ -101,18 +109,26 @@ public class RobotContainer {
         shooter = new Shooter(
           new ShooterIOSim()
         );
+        pivotArm = new PivotArm(
+          new PivotArmIOSim()
+        );
         break;
       case TEST:
-      drive = new Drive(
-          new GyroIO() {
-          },
-          new ModuleIOSim(),
-          new ModuleIOSim(),
-          new ModuleIOSim(),
-          new ModuleIOSim(),
-          new VisionIOSim());
-      shooter = new Shooter(
-        new ShooterIOSim());
+        drive = new Drive(
+            new GyroIO() {
+            },
+            new ModuleIOSim(),
+            new ModuleIOSim(),
+            new ModuleIOSim(),
+            new ModuleIOSim(),
+            new VisionIOSim()
+        );
+        shooter = new Shooter(
+          new ShooterIOSim()
+        );
+        pivotArm = new PivotArm(
+          new PivotArmIOSim()
+        );
         break;
 
       // Replayed robot, disable IO implementations
@@ -132,6 +148,9 @@ public class RobotContainer {
             });
         shooter = new Shooter(
           new ShooterIO() {}
+        );
+        pivotArm = new PivotArm(
+          new PivotArmIO() {}
         );
         break;
     }

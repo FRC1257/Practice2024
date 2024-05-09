@@ -6,14 +6,13 @@ package frc.robot;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.math.Matrix;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -165,9 +164,15 @@ public final class Constants {
     public final static int DRIVE_FRONT_RIGHT = 2;
     public final static int DRIVE_BACK_LEFT = 3;
     public final static int DRIVE_BACK_RIGHT = 4;
+
+    // Pivot Arm
+    public static final int PIVOT_ARM_LEFT1_ID = 16;
+    public static final int PIVOT_ARM_LEFT2_ID = 12;
+    public static final int PIVOT_ARM_RIGHT1_ID = 10;
+    public static final int PIVOT_ARM_RIGHT2_ID = 11;
   };
 
-  public static double PI = 3.141592653589793238462643;
+  public static final double PI = 3.141592653589793238462643;
   public static double UPDATE_PERIOD = 0.010; // seconds
   public static boolean tuningMode;
   public final static int NEO_550_CURRENT_LIMIT = 25; // amps
