@@ -180,4 +180,6 @@ public final class Constants {
   // https://www.revrobotics.com/rev-11-1271/
 
   public final static int NEO_CURRENT_LIMIT = 80; // amps
+
+  public record PID(double kP, double kI, double kD, double kFF) {}
 }
