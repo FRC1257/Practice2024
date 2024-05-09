@@ -9,9 +9,12 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
 
 public class PivotArm extends SubsystemBase {
     private PivotArmIO io;
@@ -39,7 +42,7 @@ public class PivotArm extends SubsystemBase {
         logV = new LoggedDashboardNumber("PivotArm/kV", ffConstants[2]);
         logA = new LoggedDashboardNumber("PivotArm/kA", ffConstants[3]);
 
-        armMechanism = new MechanismLigament2d(getName(), PivotArmConstants.LENGTH_M, 0);
+        armMechanism = getMechanism();
     }
 
     @Override
@@ -61,6 +64,14 @@ public class PivotArm extends SubsystemBase {
         armMechanism.setAngle(Units.radiansToDegrees(inputs.angleRad));
 
         Logger.processInputs(getName(), inputs);
+    }
+
+    public MechanismLigament2d getMechanism() {
+        return new MechanismLigament2d(getName(), PivotArmConstants.LENGTH_M, 0, 5, new Color8Bit(Color.kAqua));
+    }
+
+    public void setMechanism(MechanismLigament2d mechanism) {
+        this.armMechanism = mechanism;
     }
 
     /** A command that moves the arm to a specific setpoint using PID

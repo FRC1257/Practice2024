@@ -156,8 +156,10 @@ public class RobotContainer {
     }
 
     // Set up robot state manager
+    MechanismRoot2d root = mech.getRoot("pivot", 1, 0.5);
+    
+    pivotArm.setMechanism(root.append(pivotArm.getMechanism()));
 
-    MechanismRoot2d root = mech.getRoot("elevator", 1, 0.5);
     // add subsystem mechanisms
     SmartDashboard.putData("Arm Mechanism", mech);
 
