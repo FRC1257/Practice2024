@@ -1,5 +1,9 @@
-package frc.robot.commands.subsystems.GroundIntake;
+package frc.robot.subsystems.GroundIntake;
 
-public static GroundIntakeConstants {
-    public record GroundIntakePID(kP,kI,kD,kFF){}
+import frc.robot.Constants.PID;
+
+public class GroundIntakeConstants {
+
+    public static double GEAR_REDUCTION = 12/57;
+    public static PID pid = new PID(0, 0, 0, 0);
 }

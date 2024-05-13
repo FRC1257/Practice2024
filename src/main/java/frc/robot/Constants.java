@@ -170,6 +170,9 @@ public final class Constants {
     public static final int PIVOT_ARM_LEFT2_ID = 12;
     public static final int PIVOT_ARM_RIGHT1_ID = 10;
     public static final int PIVOT_ARM_RIGHT2_ID = 11;
+
+    // Ground Intake
+    public static final int GROUND_INTAKE_ID = 12; // CHANGE LATER
   };
 
   public static final double PI = 3.141592653589793238462643;
