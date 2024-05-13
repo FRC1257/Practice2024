@@ -5,7 +5,12 @@ import static frc.robot.Constants.PID;
 public interface GroundIntakeIO {
     @Autolog
     public static class GroundIntakeIOInputs {
-        public double velocityRad;
+        public double angleRad;
+        public double angVelocityRadPerSec;
+        public double appliedVolts;
+        public double[] currentAmps;
+        public double[] tempCelsius;
+        public double setpointVelocity;
     }
     /** Updates the values found in the GroundIntakeIOInputs class (used for logging) */
     public default void updateInputs(GroundIntakeIOInputs inputs) {}

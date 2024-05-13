@@ -4,10 +4,13 @@ import static frc.robot.Constants.ElectricalLayout;
 import frc.robot.Constants.PID;
 
 public class GroundIntakeIOSparkMax extends GroundIntakeIO{
-    CANSparkMax topMotor;
+    private CANSparkMax intakeMotor;
+    private RelativeEncoder encoder;
+    private SparkPIDController velocityPID;
 
     public GroundIntakeIOSparkMax() {
-        topMotor = new CANSparkMax(ElectricalLayout.INTAKE_MOTOR, CANSparkMax.MotorType.kBrushless);
+        intakeMotor = new CANSparkMax(ElectricalLayout.INTAKE_MOTOR, CANSparkMax.MotorType.kBrushless);
+
     }
 
     @Override
