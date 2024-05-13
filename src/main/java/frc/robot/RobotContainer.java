@@ -190,9 +190,9 @@ public class RobotContainer {
 
         DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
 
-        shooter.setDefaultCommand(shooter.setVoltage(DEFAULT_VOLTAGE)); //redefine later
+        shooter.setDefaultCommand(shooter.runVoltage(0)); //redefine later
 
-        pivotArm.setDefaultCommand(pivotArm.goToSetpoint(PIVOT_ARM_SETPOINT)); //redefine later
+        pivotArm.setDefaultCommand(pivotArm.manualCommand(0)); //redefine later
   }
 
   /**

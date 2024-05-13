@@ -66,6 +66,16 @@ public class PivotArm extends SubsystemBase {
         Logger.processInputs(getName(), inputs);
     }
 
+    public void move(double speed) {
+        if(speed > 0 && io.getAngle() > PivotArmConstants.MAX_ANGLE_RADS) {
+            speed = 0;
+        }
+        if(speed < 0 && io.getAngle() < PivotArmConstants.MIN_ANGLE_RADS) {
+            speed = 0;
+        }
+        io.setVoltage(speed * 12);
+    }
+
     public MechanismLigament2d getMechanism() {
         return new MechanismLigament2d(getName(), PivotArmConstants.LENGTH_M, 0, 5, new Color8Bit(Color.kAqua));
     }
@@ -97,5 +107,27 @@ public class PivotArm extends SubsystemBase {
      */
     public Command pidCommand(double setpoint, boolean runForever) {
         return pidCommand(() -> setpoint, runForever);
+    }
+
+    /**
+     * A command that moves the arm a certain speed
+     * @param speedSupplier A function continuously returning the desired speed (-1 <= speed <= 1)
+     */
+    public Command manualCommand(DoubleSupplier speedSupplier) {
+        return new FunctionalCommand(
+            () -> {},
+            () -> move(speedSupplier.getAsDouble()),
+            (interrupt) -> {},
+            () -> false,
+            this
+        );
+    }
+
+    /**
+     * A command that moves the arm a certain speed
+     * @param speed The desired speed (-1 <= speed <= 1)
+     */
+    public Command manualCommand(double speed) {
+        return manualCommand(() -> speed);
     }
 }
