@@ -7,11 +7,10 @@ import org.littletonrobotics.junction.AutoLog;
 public interface GroundIntakeIO {
     @AutoLog
     public static class GroundIntakeIOInputs {
-        public double angleRad;
         public double angVelocityRadPerSec;
         public double appliedVolts;
-        public double[] currentAmps;
-        public double[] tempCelsius;
+        public double currentAmps;
+        public double tempCelsius;
         public double setpointVelocity;
     }
     /** Updates the values found in the GroundIntakeIOInputs class (used for logging) */
@@ -19,6 +18,9 @@ public interface GroundIntakeIO {
 
     /** sets the raw voltage of the motor (NO velocity PID) */
     public default void setVoltage(double voltage) {}
+
+    /** Runs a certain velocity based on PID */
+    public default void setSpeedPID(double speed) {}
 
     /** gets the angular velocity of the flywheels */
     public default double getAngVelocity() {return 0;}

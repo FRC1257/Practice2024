@@ -6,6 +6,7 @@ import static frc.robot.Constants.ElectricalLayout;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import frc.robot.Constants.PID;
@@ -15,7 +16,7 @@ public class GroundIntakeIOSparkMax implements GroundIntakeIO{
     private RelativeEncoder encoder;
     private SparkPIDController velocityPID;
 
-    private double setpoint = 0;
+    private double setpoint;
 
     public GroundIntakeIOSparkMax() {
         intakeMotor = new CANSparkMax(ElectricalLayout.GROUND_INTAKE_ID, CANSparkMax.MotorType.kBrushless);
@@ -32,25 +33,27 @@ public class GroundIntakeIOSparkMax implements GroundIntakeIO{
 
         velocityPID = intakeMotor.getPIDController();
 
-        velocityPID.setP(GroundIntakeConstants.pid.kP());
-        velocityPID.setI(GroundIntakeConstants.pid.kI());
-        velocityPID.setD(GroundIntakeConstants.pid.kD());
-        velocityPID.setFF(GroundIntakeConstants.pid.kFF());
+        setPID(GroundIntakeConstants.PID_REAL);
     }
 
     @Override
     public void updateInputs(GroundIntakeIOInputs inputs) {
-        inputs.angleRad = encoder.getPosition();
         inputs.angVelocityRadPerSec = encoder.getVelocity();
         inputs.appliedVolts = intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage();
-        inputs.currentAmps = new double[]{intakeMotor.getOutputCurrent()};
-        inputs.tempCelsius = new double[]{intakeMotor.getMotorTemperature()};
+        inputs.currentAmps = intakeMotor.getOutputCurrent();
+        inputs.tempCelsius = intakeMotor.getMotorTemperature();
         inputs.setpointVelocity = setpoint;
     }
     
     @Override
     public void setVoltage(double volts) {
         intakeMotor.setVoltage(volts);
+    }
+
+    @Override
+    public void setSpeedPID(double speed) {
+        setpoint = speed;
+        velocityPID.setReference(speed, ControlType.kVelocity);
     }
 
     @Override
@@ -72,7 +75,6 @@ public class GroundIntakeIOSparkMax implements GroundIntakeIO{
         velocityPID.setP(pid.kP());
         velocityPID.setI(pid.kI());
         velocityPID.setD(pid.kD());
-        velocityPID.setFF(pid.kFF());
     }
 
     @Override

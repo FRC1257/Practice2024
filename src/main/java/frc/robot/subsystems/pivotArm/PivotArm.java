@@ -30,17 +30,14 @@ public class PivotArm extends SubsystemBase {
 
         SmartDashboard.putData(getName(), this);
 
-        PIDConstants pidConstants = io.getPID();
-        FFConstants ffConstants = io.getFF();
+        logP = new LoggedTunableNumber("PivotArm/kP", io.getPID().kP());
+        logI = new LoggedTunableNumber("PivotArm/kI", io.getPID().kI());
+        logD = new LoggedTunableNumber("PivotArm/kD", io.getPID().kD());
 
-        logP = new LoggedTunableNumber("PivotArm/kP", pidConstants.kP());
-        logI = new LoggedTunableNumber("PivotArm/kI", pidConstants.kI());
-        logD = new LoggedTunableNumber("PivotArm/kD", pidConstants.kD());
-
-        logS = new LoggedTunableNumber("PivotArm/kS", ffConstants.kS());
-        logG = new LoggedTunableNumber("PivotArm/kG", ffConstants.kG());
-        logV = new LoggedTunableNumber("PivotArm/kV", ffConstants.kV());
-        logA = new LoggedTunableNumber("PivotArm/kA", ffConstants.kA());
+        logS = new LoggedTunableNumber("PivotArm/kS", io.getFF().kS());
+        logG = new LoggedTunableNumber("PivotArm/kG", io.getFF().kG());
+        logV = new LoggedTunableNumber("PivotArm/kV", io.getFF().kV());
+        logA = new LoggedTunableNumber("PivotArm/kA", io.getFF().kA());
 
         armMechanism = getMechanism();
     }
