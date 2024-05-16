@@ -61,6 +61,7 @@ public class RobotContainer {
   private final Drive drive;
   private final Shooter shooter;
   private final PivotArm pivotArm;
+  private final GroundIntake groundIntake;
 
   private Mechanism2d mech = new Mechanism2d(3, 3);
 
@@ -94,6 +95,9 @@ public class RobotContainer {
         pivotArm = new PivotArm(
           new PivotArmIOSparkMax()
         );
+        groundIntake = new GroundIntake(
+          new GroundIntakeIOSparkMax()
+        );
         break;
 
       // Sim robot, instantiate physics sim IO implementations
@@ -112,6 +116,9 @@ public class RobotContainer {
         pivotArm = new PivotArm(
           new PivotArmIOSim()
         );
+        groundIntake = new GroundIntake(
+          new GroundIntakeIOSim()
+        );
         break;
       case TEST:
         drive = new Drive(
@@ -128,6 +135,9 @@ public class RobotContainer {
         );
         pivotArm = new PivotArm(
           new PivotArmIOSim()
+        );
+        groundIntake = new GroundIntake(
+          new GroundIntakeIOSim()
         );
         break;
 
@@ -151,6 +161,9 @@ public class RobotContainer {
         );
         pivotArm = new PivotArm(
           new PivotArmIO() {}
+        );
+        groundIntake = new GroundIntake(
+          new GroundIntakeIO() {}
         );
         break;
     }
