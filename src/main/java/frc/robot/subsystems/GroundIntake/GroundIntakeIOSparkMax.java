@@ -14,9 +14,8 @@ import frc.robot.Constants.PID;
 public class GroundIntakeIOSparkMax implements GroundIntakeIO{
     private CANSparkMax intakeMotor;
     private RelativeEncoder encoder;
-    private SparkPIDController velocityPID;
 
-    private double setpoint;
+    private double desiredVolts;
 
     public GroundIntakeIOSparkMax() {
         intakeMotor = new CANSparkMax(ElectricalLayout.GROUND_INTAKE_ID, CANSparkMax.MotorType.kBrushless);
@@ -30,30 +29,22 @@ public class GroundIntakeIOSparkMax implements GroundIntakeIO{
 
         encoder.setPositionConversionFactor(2 * Math.PI * GroundIntakeConstants.GEAR_REDUCTION);
         encoder.setVelocityConversionFactor(2 * Math.PI * GroundIntakeConstants.GEAR_REDUCTION / 60);
-
-        velocityPID = intakeMotor.getPIDController();
-
-        setPID(GroundIntakeConstants.PID_REAL);
     }
 
     @Override
     public void updateInputs(GroundIntakeIOInputs inputs) {
         inputs.angVelocityRadPerSec = encoder.getVelocity();
+        inputs.desiredVolts = desiredVolts;
         inputs.appliedVolts = intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage();
         inputs.currentAmps = intakeMotor.getOutputCurrent();
         inputs.tempCelsius = intakeMotor.getMotorTemperature();
-        inputs.setpointVelocity = setpoint;
+        inputs.isVoltageClose = Math.abs(inputs.appliedVolts - desiredVolts) < GroundIntakeConstants.VOLTAGE_TOLERANCE;
     }
     
     @Override
-    public void setVoltage(double volts) {
-        intakeMotor.setVoltage(volts);
-    }
-
-    @Override
-    public void setSpeedPID(double speed) {
-        setpoint = speed;
-        velocityPID.setReference(speed, ControlType.kVelocity);
+    public void set(double speed) {
+        desiredVolts = speed * 12;
+        intakeMotor.set(speed);
     }
 
     @Override
@@ -68,22 +59,5 @@ public class GroundIntakeIOSparkMax implements GroundIntakeIO{
         } else {
             intakeMotor.setIdleMode(IdleMode.kCoast);
         }
-    }
-
-    @Override
-    public void setPID(PID pid) {
-        velocityPID.setP(pid.kP());
-        velocityPID.setI(pid.kI());
-        velocityPID.setD(pid.kD());
-    }
-
-    @Override
-    public PID getPID() {
-        return new PID(
-            velocityPID.getP(),
-            velocityPID.getI(),
-            velocityPID.getD(), 
-            velocityPID.getFF()
-        );
     }
 }

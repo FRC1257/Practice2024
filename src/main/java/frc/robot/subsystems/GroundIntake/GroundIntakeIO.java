@@ -8,29 +8,21 @@ public interface GroundIntakeIO {
     @AutoLog
     public static class GroundIntakeIOInputs {
         public double angVelocityRadPerSec;
+        public double desiredVolts;
         public double appliedVolts;
         public double currentAmps;
         public double tempCelsius;
-        public double setpointVelocity;
+        public boolean isVoltageClose;
     }
     /** Updates the values found in the GroundIntakeIOInputs class (used for logging) */
     public default void updateInputs(GroundIntakeIOInputs inputs) {}
 
-    /** sets the raw voltage of the motor (NO velocity PID) */
-    public default void setVoltage(double voltage) {}
-
-    /** Runs a certain velocity based on PID */
-    public default void setSpeedPID(double speed) {}
+    /** sets the raw speed of the motor (-1 <= speed <= 1) */
+    public default void set(double speed) {}
 
     /** gets the angular velocity of the flywheels */
     public default double getAngVelocity() {return 0;}
 
     /** if true, this function will force the flywheel to break */
     public default void setBrake(boolean brake) {}
-
-    /** sets the PID of the flywheel */
-    public default void setPID(PID pid) {}
-
-    /** Returns the PID constants of the flywheel */
-    public default PID getPID() { return new PID(0, 0, 0, 0); };
 }

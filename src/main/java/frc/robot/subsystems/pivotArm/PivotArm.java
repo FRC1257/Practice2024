@@ -114,7 +114,7 @@ public class PivotArm extends SubsystemBase {
         return new FunctionalCommand(
             () -> {},
             () -> move(speedSupplier.getAsDouble()),
-            (interrupt) -> {},
+            (interrupt) -> io.setVoltage(0),
             () -> false,
             this
         );

@@ -74,8 +74,8 @@ public class PivotArmIOSparkMax implements PivotArmIO {
         inputs.angleRad = getAngle();
         inputs.angVelocityRadPerSec = encoder.getVelocity();
         inputs.appliedVolts = leftMotor1.getAppliedOutput() * leftMotor1.getBusVoltage();
-        inputs.currentAmps = new double[] {leftMotor1.getOutputCurrent()};
-        inputs.tempCelsius = new double[] {leftMotor1.getMotorTemperature()};
+        inputs.currentAmps = new double[] { leftMotor1.getOutputCurrent(), leftMotor2.getOutputCurrent(), rightMotor1.getOutputCurrent(), rightMotor2.getOutputCurrent() };
+        inputs.tempCelsius = new double[] { leftMotor1.getMotorTemperature(), leftMotor2.getMotorTemperature(), rightMotor1.getMotorTemperature(), rightMotor2.getMotorTemperature() };
         inputs.setpointAngleRad = setpoint;
     }
 
