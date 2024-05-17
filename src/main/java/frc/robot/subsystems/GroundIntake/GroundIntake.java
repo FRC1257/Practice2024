@@ -32,10 +32,10 @@ public class GroundIntake extends SubsystemBase{
      * A command that runs the ground intake a certain speed (-1 <= speed <= 1) using PID
      * @param speedSupplier a function continuously returning the desired speed (in case it changes)
      */
-    public Command runSpeedCommand(DoubleSupplier voltsSupplier) {
+    public Command runSpeedCommand(DoubleSupplier speedSupplier) {
         return new FunctionalCommand(
             () -> {},
-            () -> io.set(voltsSupplier.getAsDouble()),
+            () -> io.set(speedSupplier.getAsDouble()),
             (interrupt) -> io.set(0),
             () -> false,
             this
@@ -43,10 +43,10 @@ public class GroundIntake extends SubsystemBase{
     }
 
     /**
-     * A command that runs the ground intake a certain speed, in radians per second, using PID
-     * @param speed the desired speed, in radians per second
+     * A command that runs the ground intake a certain speed (-1 <= speed <= 1) using PID
+     * @param speed the desired speed
      */
-    public Command runVoltageCommand(double volts) {
-        return runSpeedCommand(() -> volts);
+    public Command runSpeedCommand(double speed) {
+        return runSpeedCommand(() -> speed);
     }
 }

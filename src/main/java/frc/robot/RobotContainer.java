@@ -210,6 +210,8 @@ public class RobotContainer {
         shooter.setDefaultCommand(shooter.runVoltage(0)); //redefine later
 
         pivotArm.setDefaultCommand(pivotArm.manualCommand(0)); //redefine later
+
+        groundIntake.setDefaultCommand(groundIntake.runSpeedCommand(0));
   }
 
   /**
