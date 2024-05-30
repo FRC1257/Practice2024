@@ -21,7 +21,7 @@ public interface IndexerIO {
     public default void set(double speed) {}
 
     /** gets the angular velocity of the flywheels */
-    public default double getAngVelocity() {return 0;}
+    public default double getAngVelocity() { return 0; }
 
     /** if true, this function will force the flywheel to break */
     public default void setBrake(boolean brake) {}

@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.GroundIntake.GroundIntake;
+import frc.robot.subsystems.GroundIntake.GroundIntakeConstants;
 import frc.robot.subsystems.GroundIntake.GroundIntakeIO;
 import frc.robot.subsystems.GroundIntake.GroundIntakeIOSim;
 import frc.robot.subsystems.GroundIntake.GroundIntakeIOSparkMax;
 import frc.robot.subsystems.Indexer.Indexer;
+import frc.robot.subsystems.Indexer.IndexerConstants;
 import frc.robot.subsystems.Indexer.IndexerIO;
 import frc.robot.subsystems.Indexer.IndexerIOSim;
 import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
@@ -51,6 +53,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -240,5 +243,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+
+  // WELCOME TO COMMAND HELL
+  // THERE IS NO GOING BACK
+
+  public Command intakeWhileCommand() {
+    return groundIntake.runSpeedCommand(GroundIntakeConstants.INTAKE_SPEED)
+      .alongWith(indexer.runSpeedCommand(IndexerConstants.INTAKE_SPEED))
+      .until(indexer::isIntaked);
   }
 }

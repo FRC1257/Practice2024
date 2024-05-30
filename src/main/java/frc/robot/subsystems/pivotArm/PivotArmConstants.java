@@ -15,6 +15,11 @@ public class PivotArmConstants {
     public static final double MAX_ANGLE_RADS = Units.degreesToRadians(95);
     public static final double ANGLE_OFFSET = 0;
 
+    public static final double AMP_ANGLE = Units.degreesToRadians(95);
+    public static final double SUBWOOFER_ANGLE = Units.degreesToRadians(38);
+    public static final double SUBWOOFER_SIDE_ANGLE = Units.degreesToRadians(45);
+    public static final double PODIUM_ANGLE = Units.degreesToRadians(53);
+
     // PID constants
     public record PIDConstants(double kP, double kI, double kD) {}
     public record FFConstants(double kS, double kG, double kV, double kA) {}
