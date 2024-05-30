@@ -40,9 +40,14 @@ public class FieldConstants {
   public static Translation2d ampCenter =
       new Translation2d(Units.inchesToMeters(72.455), Units.inchesToMeters(322.996));
 
+  public static Translation2d speakerCenter =
+      new Translation2d(Units.inchesToMeters(100), Units.inchesToMeters(100));
+
   public static Pose2d TrapPose = new Pose2d(0,0, new Rotation2d(0)); // NEEDS TO BE ADJUSTED
 
   public static Pose2d ampPose = new Pose2d(ampCenter, Rotation2d.fromDegrees(-90));
+
+  public static Pose2d speakerPose = new Pose2d(speakerCenter, Rotation2d.fromDegrees(0));
 
   public static Pose2d pickupPose = new Pose2d(15.331, 1, Rotation2d.fromDegrees(-60));
 

@@ -29,6 +29,7 @@ public class PivotArmConstants {
     public static final double PID_TOLERANCE = Units.degreesToRadians(1);
 
     public static final double PIVOT_AMP_ANGLE = Units.degreesToRadians(105.0);
+    public static final double PIVOT_SPEAKER_ANGLE = Units.degreesToRadians(80);
 
     public static class PivotArmSimConstants {
         // PID constants
