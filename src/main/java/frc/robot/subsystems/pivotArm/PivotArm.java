@@ -127,4 +127,8 @@ public class PivotArm extends SubsystemBase {
     public Command manualCommand(double speed) {
         return manualCommand(() -> speed);
     }
+
+    public Command zeroPivotCommand() {
+        return pidCommand(0, false);
+    }
 }

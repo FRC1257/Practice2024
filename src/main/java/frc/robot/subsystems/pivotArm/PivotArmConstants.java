@@ -28,6 +28,8 @@ public class PivotArmConstants {
     public static final FFConstants FF = new FFConstants(0, 0, 0, 0);
     public static final double PID_TOLERANCE = Units.degreesToRadians(1);
 
+    public static final double PIVOT_AMP_ANGLE = Units.degreesToRadians(105.0);
+
     public static class PivotArmSimConstants {
         // PID constants
         public static final PIDConstants PID_SIM = new PIDConstants(0, 0, 0);
