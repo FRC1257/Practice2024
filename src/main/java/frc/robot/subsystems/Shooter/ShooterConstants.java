@@ -13,6 +13,9 @@ public class ShooterConstants {
 
     public static final double wheelRadiusM = 1257;
 
+    public static final double SHOOTER_FULL_SPEED_VOLTAGE = 11;
+    public static final double SHOOTER_UNJAM_VOLTAGE = -0.5;
+
     public static final LoggedTunableGains RealController = new LoggedTunableGains(0, 0, 0, 0, 0, 0); 
     public static final LoggedTunableGains SimulationController = new LoggedTunableGains(0, 0, 0, 0, 0,0);
 }

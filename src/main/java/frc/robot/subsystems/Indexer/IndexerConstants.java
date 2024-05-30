@@ -9,4 +9,7 @@ public class IndexerConstants {
     public static final double GEAR_REDUCTION = 1;
     public static final double VOLTAGE_TOLERANCE = 1;
     public static final double INTAKE_SPEED = 0.67;
+
+    public static final double INDEXER_OUT_VOLTAGE = -2;
+    public static final double INDEXER_IN_VOLTAGE = 8;
 }

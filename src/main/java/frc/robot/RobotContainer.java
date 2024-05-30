@@ -23,6 +23,7 @@ import frc.robot.subsystems.Indexer.IndexerIO;
 import frc.robot.subsystems.Indexer.IndexerIOSim;
 import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
 import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.ShooterConstants;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
 import frc.robot.subsystems.Shooter.ShooterIOSparkMax;
@@ -266,5 +267,13 @@ public class RobotContainer {
   public Command driveAndAimSpeaker() {
     return drive.goToPose(FieldConstants.speakerPose)
       .alongWith(pivotArm.pidCommand(PivotArmConstants.PIVOT_SPEAKER_ANGLE, false));
+  }
+
+  public Command shootNote() {
+    return indexer.runSpeedCommand(IndexerConstants.INDEXER_OUT_VOLTAGE / 2) // These two lines make sure nothing is stuck
+      .alongWith(shooter.runVoltage(ShooterConstants.SHOOTER_UNJAM_VOLTAGE)).withTimeout(.1) 
+      .andThen(shooter.runVoltage(ShooterConstants.SHOOTER_FULL_SPEED_VOLTAGE)) // Preps shooter
+        .alongWith(indexer.runSpeedCommand(IndexerConstants.INDEXER_OUT_VOLTAGE / 100).withTimeout(.5) // Moves note backwards
+        .andThen(indexer.runSpeedCommand(IndexerConstants.INDEXER_IN_VOLTAGE)).withTimeout(1)); // Moves note into shooter
   }
 }
