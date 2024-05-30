@@ -30,10 +30,7 @@ import frc.robot.subsystems.drive.GyroIOReal;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
-import frc.robot.subsystems.pivotArm.PivotArm;
-import frc.robot.subsystems.pivotArm.PivotArmIO;
-import frc.robot.subsystems.pivotArm.PivotArmIOSim;
-import frc.robot.subsystems.pivotArm.PivotArmIOSparkMax;
+import frc.robot.subsystems.pivotArm.*;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOPhoton;
 import frc.robot.subsystems.vision.VisionIOSim;
@@ -244,6 +241,13 @@ public class RobotContainer {
 
   public Command zeroPosition() {
     return pivotArm.zeroPivotCommand()
-      .deadlineWith()
+      .deadlineWith(indexer.runSpeedCommand(0))
+        .alongWith(groundIntake.runSpeedCommand(0))
+        .alongWith(shooter.stop());
+  }
+
+  public Command driveAndAimAmp() {
+    return drive.goToPose(FieldConstants.ampPose)
+      .alongWith(pivotArm.pidCommand(PivotArmConstants.PIVOT_AMP_ANGLE, false));
   }
 }
