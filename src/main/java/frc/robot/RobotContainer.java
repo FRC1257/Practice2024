@@ -241,4 +241,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
+
+  public Command zeroPosition() {
+    return pivotArm.zeroPivotCommand()
+      .deadlineWith()
+  }
 }
