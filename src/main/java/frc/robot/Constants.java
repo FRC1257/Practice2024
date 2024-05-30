@@ -172,7 +172,11 @@ public final class Constants {
     public static final int PIVOT_ARM_RIGHT2_ID = 11;
 
     // Ground Intake
-    public static final int GROUND_INTAKE_ID = 12; // CHANGE LATER
+    public static final int GROUND_INTAKE_ID = 9;
+    
+    // Indexer
+    public static final int INDEXER_ID = 15;
+    public static final int INDEXER_BREAK_BEAM = 9;
   };
 
   public static final double PI = 3.141592653589793238462643;

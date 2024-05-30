@@ -16,6 +16,10 @@ import frc.robot.subsystems.GroundIntake.GroundIntake;
 import frc.robot.subsystems.GroundIntake.GroundIntakeIO;
 import frc.robot.subsystems.GroundIntake.GroundIntakeIOSim;
 import frc.robot.subsystems.GroundIntake.GroundIntakeIOSparkMax;
+import frc.robot.subsystems.Indexer.Indexer;
+import frc.robot.subsystems.Indexer.IndexerIO;
+import frc.robot.subsystems.Indexer.IndexerIOSim;
+import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -66,6 +70,7 @@ public class RobotContainer {
   private final Shooter shooter;
   private final PivotArm pivotArm;
   private final GroundIntake groundIntake;
+  private final Indexer indexer;
 
   private Mechanism2d mech = new Mechanism2d(3, 3);
 
@@ -102,6 +107,9 @@ public class RobotContainer {
         groundIntake = new GroundIntake(
           new GroundIntakeIOSparkMax()
         );
+        indexer = new Indexer(
+          new IndexerIOSparkMax()
+        );
         break;
 
       // Sim robot, instantiate physics sim IO implementations
@@ -123,6 +131,9 @@ public class RobotContainer {
         groundIntake = new GroundIntake(
           new GroundIntakeIOSim()
         );
+        indexer = new Indexer(
+          new IndexerIOSim()
+        );
         break;
       case TEST:
         drive = new Drive(
@@ -142,6 +153,9 @@ public class RobotContainer {
         );
         groundIntake = new GroundIntake(
           new GroundIntakeIOSim()
+        );
+        indexer = new Indexer(
+          new IndexerIOSim()
         );
         break;
 
@@ -168,6 +182,9 @@ public class RobotContainer {
         );
         groundIntake = new GroundIntake(
           new GroundIntakeIO() {}
+        );
+        indexer = new Indexer(
+          new IndexerIO() {}
         );
         break;
     }
@@ -212,6 +229,8 @@ public class RobotContainer {
         pivotArm.setDefaultCommand(pivotArm.manualCommand(0)); //redefine later
 
         groundIntake.setDefaultCommand(groundIntake.runSpeedCommand(0));
+
+        indexer.setDefaultCommand(indexer.runSpeedCommand(0));
   }
 
   /**
