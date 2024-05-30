@@ -250,4 +250,9 @@ public class RobotContainer {
     return drive.goToPose(FieldConstants.ampPose)
       .alongWith(pivotArm.pidCommand(PivotArmConstants.PIVOT_AMP_ANGLE, false));
   }
+
+  public Command driveAndAimSpeaker() {
+    return drive.goToPose(FieldConstants.speakerPose)
+      .alongWith(pivotArm.pidCommand(PivotArmConstants.PIVOT_SPEAKER_ANGLE, false));
+  }
 }
